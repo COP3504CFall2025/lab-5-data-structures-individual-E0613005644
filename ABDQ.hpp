@@ -20,11 +20,64 @@ public:
     // Big 5
     ABDQ() : capacity_(4), size_(0), front_(0), back_(0), data_(new T[capacity_]) {}
     explicit ABDQ(std::size_t capacity) : capacity_(capacity), size_(0), front_(0), back_(0), data_(new T[capacity_]) {}
-    ABDQ(const ABDQ& other);
-    ABDQ(ABDQ&& other) noexcept;
-    ABDQ& operator=(const ABDQ& other);
-    ABDQ& operator=(ABDQ&& other) noexcept;
-    ~ABDQ() override;
+    ABDQ(const ABDQ& other){
+        this->data_ = new T[other.capacity_];
+        this->capacity_ = other.capacity_;
+        this->size_ = other.size_;
+        this->front_ = 0; //making index 0 the first element
+        this->back_ = other.size_;
+        for(size_t i=0; i < other.size_; ++i){
+            data_[i] = other.data_[(other.front_+i)%other.capacity_];
+        }
+    }
+    ABDQ(ABDQ&& other) noexcept{
+        this->data_ = other.data_;
+        this->capacity_ = other.capacity_;
+        this->size_ = other.size_;
+        this->front_ = other.front_;
+        this->back_ = other.back_;
+        other.data_ = nullptr;
+        other.capacity_ = 0;
+        other.size_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+    }
+    ABDQ& operator=(const ABDQ& other){
+        if(this==&other){
+            return *this;
+        }
+        delete[] data_;
+        this->data_ = new T[other.capacity_];
+        this->capacity_ = other.capacity_;
+        this->size_ = other.size_;
+        this->front_ = 0; //trying to make the array start where the first element is at index 0
+        this->back_ = other.size_;
+        for(size_t i=0; i < other.size_; ++i){
+            data_[i] = other.data_[(other.front_+i)%other.capacity_];
+        }
+        return *this;
+    }
+    ABDQ& operator=(ABDQ&& other) noexcept{
+        if(this==&other){
+            return *this;
+        }
+        delete[] data_;
+        this->data_ = other.data_;
+        this->capacity_ = other.capacity_;
+        this->size_ = other.size_;
+        this->front_ = other.front_;
+        this->back_ = other.back_;
+        other.data_ = nullptr;
+        other.capacity_ = 0;
+        other.size_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+        return *this;
+    }
+    ~ABDQ() override{
+        delete[] data_;
+        data_ = nullptr;
+    }
 
     // Insertion
     //imagine a clock, and when you push front you move ccw
