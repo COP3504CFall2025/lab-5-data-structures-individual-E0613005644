@@ -112,7 +112,22 @@ public:
             array_[i-1] = array_[i];
         }
         curr_size_--;
+        shrinkIfNeeded();
         return front;
+    }
+
+    //basically, for dequeqe() if most of the array is being unused. so for efficient memory use
+    void shrinkIfNeeded(){
+        if(curr_size_<=(capacity_/4) && capacity_>1{
+            size_t new_capacity = capacity_/cale_factor_;
+            T* new_array_ = new T[new_capacity];
+            for(size_t i = 0; i < curr_size_; i++){
+                new_array_[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = new_array;
+            capacity_ = new_capacity;
+        }
     }
 
 };
