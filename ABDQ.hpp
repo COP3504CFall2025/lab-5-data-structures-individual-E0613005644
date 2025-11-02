@@ -124,7 +124,7 @@ public:
     // Deletion
     T popFront() override{
         if(size_ == 0){
-            throw std::out_of_range("Empty queue");
+            throw std::runtime_error("Empty queue");
         }else{
             T item = data_[front_];
             front_ = (front_+1)%capacity_; //move the front_ index forward in "circular" array (clockwise)
@@ -134,7 +134,7 @@ public:
     }
     T popBack() override{
         if(size_ == 0){
-            throw std::out_of_range("Empty queue");
+            throw std::runtime_error("Empty queue");
         }else{
             if(back_==0){ //move back first because back_ points to the NEXT free slot, not the last-filled one. You have to move back. If it is zero then we have to go to capacity-1
                 back_ = capacity_-1;
@@ -150,14 +150,14 @@ public:
     // Access
     const T& front() const override{
         if(size_ == 0){
-            throw std::out_of_range("Empty queue");
+            throw std::runtime_error("Empty queue");
         }else{
             return data_[front_];
         }
     }
     const T& back() const override{
         if(size_ == 0){
-            throw std::out_of_range("Empty queue");
+            throw std::runtime_error("Empty queue");
         }else{
             size_t position = 0;
             if(back_==0){
