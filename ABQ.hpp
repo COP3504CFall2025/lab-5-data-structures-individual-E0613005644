@@ -119,13 +119,13 @@ public:
     //basically, for dequeqe() if most of the array is being unused. so for efficient memory use
     void shrinkIfNeeded(){
         if(curr_size_<=(capacity_/4) && capacity_>1){
-            size_t new_capacity = capacity_/cale_factor_;
+            size_t new_capacity = capacity_/scale_factor_;
             T* new_array_ = new T[new_capacity];
             for(size_t i = 0; i < curr_size_; i++){
                 new_array_[i] = array_[i];
             }
             delete[] array_;
-            array_ = new_array;
+            array_ = new_array_;
             capacity_ = new_capacity;
         }
     }
