@@ -95,7 +95,7 @@ public:
 
     T peek() const override{
         if(curr_size_==0){
-            throw std::out_of_range("Empty ABS");
+            throw std::runtime_error("Empty ABS");
         }else{
             return array_[curr_size_-1];
         }
@@ -103,7 +103,7 @@ public:
 
     T pop() override{
         if(curr_size_ == 0) {
-            throw std::out_of_range("Empty ABS");
+            throw std::runtime_error("Empty ABS");
         }else{
             curr_size_--;
             return array_[curr_size_]; //for my sanity, this returns the element that was just removed
