@@ -6,6 +6,19 @@ using namespace std;
 
 template <typename T>
 class LinkedList {
+private:
+	// Stores pointers to first and last nodes and count
+	struct Node {
+		T data;
+		Node* prev;
+		Node* next;
+	};
+
+	Node* head;
+	Node* tail;
+	unsigned int count;
+
+
 public:
 	// Behaviors
 	void printForward() const{
@@ -111,7 +124,7 @@ public:
 		}
 		return true;
 	}
-	void Clear() {
+	void clear() {
 		Node* current = this->head;
 		while(current!=nullptr) {
 			Node* nextNode  = current->next;
@@ -128,7 +141,7 @@ public:
 		if(this==&other){
 			return *this;
 		}
-		Clear();
+		clear();
 		this->head = other.head;
 		this->tail = other.tail;
 		this->count = other.count;
@@ -141,7 +154,7 @@ public:
 		if(this==&rhs){
 			return *this;
 		}
-		Clear();
+		clear();
 		Node* current = rhs.head;
 		while(current!=nullptr){
 			addTail(current->data);
@@ -152,8 +165,8 @@ public:
 
 	// Construction/Destruction
 	LinkedList() {
-		head = nullptr
-		tail = nullptr
+		head = nullptr;
+		tail = nullptr;
 		count = 0;
 	}
 	LinkedList(const LinkedList<T>& list){
@@ -175,20 +188,8 @@ public:
 		other.count = 0;
 	}
 	~LinkedList(){
-		Clear();
+		clear();
 	}
-
-private:
-	// Stores pointers to first and last nodes and count
-	struct Node {
-		T data;
-		Node* prev;
-		Node* next;
-	};
-
-	Node* head;
-	Node* tail;
-	unsigned int count;
 
 };
 
