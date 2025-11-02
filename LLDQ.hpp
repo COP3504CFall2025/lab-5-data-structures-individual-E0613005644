@@ -28,7 +28,7 @@ public:
     // Core Removal Operations
     T popFront() override{
         if(list.getCount()==0){
-            throw std::out_of_range("LLDQ::empty");
+            throw std::runtime_error("LLDQ::empty");
         }else{
             T item = list.getHead()->data;
             list.removeHead();
@@ -37,7 +37,7 @@ public:
     }
     T popBack() override{
         if(list.getCount()==0){
-            throw std::out_of_range("LLDQ::empty");
+            throw std::runtime_error("LLDQ::empty");
         }else{
             T item = list.getTail()->data;
             list.removeTail();
@@ -48,14 +48,14 @@ public:
     // Element Accessors
     const T& front() const override{
         if(list.getCount()==0){
-            throw std::out_of_range("LLDQ::empty");
+            throw std::runtime_error("LLDQ::empty");
         }else{
             return list.getHead()->data;
         }
     }
     const T& back() const override{
         if(list.getCount()==0){
-            throw std::out_of_range("LLDQ::empty");
+            throw std::runtime_error("LLDQ::empty");
         }else{
             return list.getTail()->data;
         }
