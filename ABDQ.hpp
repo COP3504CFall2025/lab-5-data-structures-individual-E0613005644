@@ -18,8 +18,8 @@ private:
 
 public:
     // Big 5
-    ABDQ();
-    explicit ABDQ(std::size_t capacity);
+    ABDQ() : capacity_(4), size_(0), front_(0), back_(0), data_(new T[capacity_]) {}
+    explicit ABDQ(std::size_t capacity) : capacity_(capacity), size_(0), front_(0), back_(0), data_(new T[capacity_]) {}
     ABDQ(const ABDQ& other);
     ABDQ(ABDQ&& other) noexcept;
     ABDQ& operator=(const ABDQ& other);
@@ -27,18 +27,98 @@ public:
     ~ABDQ() override;
 
     // Insertion
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    //imagine a clock, and when you push front you move ccw
+    void pushFront(const T& item) override{
+        if(size_ == capacity_){
+            size_t new_capacity_ = capacity_ * SCALE_FACTOR;
+            T* new_data_ = new T[new_capacity_];
+            for(size_t i=0;i<size_;i++){
+                new_data_[i] = data_[(front_+i)%capacity_]; //starts from the actual front and then adds the i index, but %capacity makes it wrap around when you hit the end of data_
+            }
+            delete[] data_;
+            data_ = new_data_;
+            capacity_ = new_capacity_;
+            front_ = 0;
+            back_ = size_;
+        }
+        if(front_ == 0) {
+            front_ = capacity_-1; //we have to insert one behind the front, that's actually the front of the list or if you use a circle the last element is right behind it
+        }else{
+            front_ = front_ -1;
+        }
+        data_[front_] = item;
+        size_++;
+    }
+    void pushBack(const T& item) override{
+        if(size_ == capacity_){
+            size_t new_capacity_ = capacity_ * SCALE_FACTOR;
+            T* new_data_ = new T[new_capacity_];
+            for(size_t i=0;i<size_;i++){
+                new_data_[i] = data_[(front_+i)%capacity_];
+            }
+            delete[] data_;
+            data_ = new_data_;
+            capacity_ = new_capacity_;
+            front_ = 0;
+            back_ = size_;
+
+        }
+        data_[back_] = item;
+        back_ = (back_+1) % capacity_; //bc back is the index where the NEXT element will be inserted at the back, it's one step forward in a "circular" array
+        size_++;
+    }
 
     // Deletion
-    T popFront() override;
-    T popBack() override;
+    T popFront() override{
+        if(size_ == 0){
+            throw std::out_of_range("Empty queue");
+        }else{
+            T item = data_[front_];
+            front_ = (front_+1)%capacity_; //move the front_ index forward in "circular" array (clockwise)
+            size_--;
+            return item;
+        }
+    }
+    T popBack() override{
+        if(size_ == 0){
+            throw std::out_of_range("Empty queue");
+        }else{
+            if(back_==0){ //move back first because back_ points to the NEXT free slot, not the last-filled one. You have to move back. If it is zero then we have to go to capacity-1
+                back_ = capacity_-1;
+            }else{
+                back_ = back_-1;
+            }
+            T item = data_[back_];
+            size_--;
+            return item;
+        }
+    }
 
     // Access
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override{
+        if(size_ == 0){
+            throw std::out_of_range("Empty queue");
+        }else{
+            return data_[front_];
+        }
+    }
+    const T& back() const override{
+        if(size_ == 0){
+            throw std::out_of_range("Empty queue");
+        }else{
+            size_t position = 0;
+            if(back_==0){
+                position = capacity_-1;
+            }else{
+                position = back_-1;
+            }
+            return data_[position];
+        }
+    }
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override{
+        return size_;
+    }
 
 };
