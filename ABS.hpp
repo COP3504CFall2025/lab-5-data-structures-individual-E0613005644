@@ -115,6 +115,9 @@ public:
     void shrinkIfNeeded(){
         if(curr_size_<=(capacity_/4) && capacity_>1){
             size_t new_capacity = capacity_/scale_factor_;
+            if(new_capacity<1){
+                new_capacity = 1;
+            }
             T* new_array_ = new T[new_capacity];
             for(size_t i = 0; i < curr_size_; i++){
                 new_array_[i] = array_[i];
