@@ -105,6 +105,7 @@ public:
         if(curr_size_ == 0) {
             throw std::runtime_error("Empty ABS");
         }else{
+			T value = array_[curr_size_-1];
             curr_size_--;
 			if(curr_size_*2 <= capacity_ && capacity_>2){ //if my current number of elements is half or less of my capacity, shrink and capacity>2 ensures that you don't shrink below 2
 				size_t new_capacity_ = capacity_ /scale_factor_;
@@ -116,7 +117,7 @@ public:
 			array_ = new_array_;
 			capacity_ = new_capacity_;
 			}
-            return array_[curr_size_]; //for my sanity, this returns the element that was just removed
+            return array_[value]; //for my sanity, this returns the element that was just removed
         }
     }
 
