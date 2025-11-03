@@ -114,7 +114,7 @@ public:
 				}
 			delete[] array_;
 			array_ = new_array_;
-			capacity_ = new_capacity_
+			capacity_ = new_capacity_;
 			}
             return array_[curr_size_]; //for my sanity, this returns the element that was just removed
         }
