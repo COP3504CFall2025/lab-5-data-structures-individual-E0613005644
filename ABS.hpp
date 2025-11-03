@@ -106,6 +106,16 @@ public:
             throw std::runtime_error("Empty ABS");
         }else{
             curr_size_--;
+			if(curr_size_*2 <= capacity_ && capacity_>2){ //if my current number of elements is half or less of my capacity, shrink and capacity>2 ensures that you don't shrink below 2
+				size_t new_capacity_ = capacity_ /scale_factor_;
+				T* new_array_ = new T[new_capacity_];
+				for(size_t i=0; i<curr_size_;i++){
+					new_array_[i] = array_[i];
+				}
+			delete[] array_;
+			array_ = new_array_;
+			capacity_ = new_capacity_
+			}
             return array_[curr_size_]; //for my sanity, this returns the element that was just removed
         }
     }
