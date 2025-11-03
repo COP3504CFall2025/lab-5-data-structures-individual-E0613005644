@@ -107,7 +107,7 @@ public:
         }else{
 			T value = array_[curr_size_-1];
             curr_size_--;
-			if(curr_size_*2 <= capacity_ && capacity_>2){ //if my current number of elements is half or less of my capacity, shrink and capacity>2 ensures that you don't shrink below 2
+			if(curr_size_ < capacity_/4 && capacity_ > 1){ //if my current number of elements is 1/4 or less of my capacity, shrink and capacity>1 ensures that you don't shrink below 1
 				size_t new_capacity_ = capacity_ /scale_factor_;
 				T* new_array_ = new T[new_capacity_];
 				for(size_t i=0; i<curr_size_;i++){
