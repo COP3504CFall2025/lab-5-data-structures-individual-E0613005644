@@ -117,7 +117,7 @@ public:
 			array_ = new_array_;
 			capacity_ = new_capacity_;
 			}
-            value //for my sanity, this returns the element that was just removed
+            value; //for my sanity, this returns the element that was just removed
         }
     }
 
