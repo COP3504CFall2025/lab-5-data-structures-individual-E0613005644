@@ -106,25 +106,7 @@ public:
             throw std::runtime_error("Empty ABS");
         }else{
             curr_size_--;
-            shrinkIfNeeded(); //should fix stack tests
             return array_[curr_size_]; //for my sanity, this returns the element that was just removed
-        }
-    }
-
-    //seems like this is the solution for the failed test case, I used this the ABQ.hpp
-    void shrinkIfNeeded(){
-        if(curr_size_<=(capacity_/4) && capacity_>1){
-            size_t new_capacity = capacity_/scale_factor_;
-            if(new_capacity<1){
-                new_capacity = 1;
-            }
-            T* new_array_ = new T[new_capacity];
-            for(size_t i = 0; i < curr_size_; i++){
-                new_array_[i] = array_[i];
-            }
-            delete[] array_;
-            array_ = new_array_;
-            capacity_ = new_capacity;
         }
     }
 
